@@ -6,12 +6,10 @@ module.exports = {
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
 
-      Example:*/
-      return queryInterface.bulkInsert('Roles', [{
-        name: 'Client',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }], {});
+      Example:
+      return queryInterface.createTable('users', { id: Sequelize.INTEGER });
+    */
+   return queryInterface.addColumn('Users','checkDelete',Sequelize.BOOLEAN,{})
   },
 
   down: (queryInterface, Sequelize) => {
@@ -20,7 +18,7 @@ module.exports = {
       Return a promise to correctly handle asynchronicity.
 
       Example:
-      return queryInterface.bulkDelete('People', null, {});
+      return queryInterface.dropTable('users');
     */
   }
 };

@@ -8,11 +8,13 @@ module.exports = {
 
       Example:*/
       return queryInterface.bulkInsert('Users', [{
-        firstName: 'Balammagari',
-        middleName:'navya',
-        lastName:'reddy',
-        phno:'1234567890',
-        rollid:3,
+        firstName: 'suma',
+        middleName:'sree',
+        lastName:'madam',
+        phno:'9087567987',
+        rollid:2,
+        projectId:2,
+        checkDelete:false,
         createdAt: new Date(),
         updatedAt: new Date()
 

@@ -5,10 +5,14 @@ module.exports = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     middleName: DataTypes.STRING,
     phno: DataTypes.STRING,
-    rollid:DataTypes.INTEGER
+    rollid:DataTypes.INTEGER,
+    checkDelete:true
   }, {});
   User.associate = function(models) {
     User.belongsTo(models.Role, {foreignKey: 'rollid'})
+    User.belongsTo(models.Project,{foreignKey:'projectId'})
+    models.Project.belongsTo(models.Role,{foreignKey:'rollId'})
+    models.Project.hasMany(User,{foreignKey:'projectId'})
   };
   return User;
 };

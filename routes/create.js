@@ -28,6 +28,22 @@ async function getUsers (req, res, next) {
         users
     })
 }
+async function getSoftDeletedUsers (req, res, next) {
+    const users = await models.User.findAll({
+        where:{
+            checkDelete:true
+        }
+    })
+    res.status(200).json({
+        users
+    })
+}
+async function getRoles (req, res, next) {
+    const users = await models.Role.findAll({})
+    res.status(200).json({
+        users
+    })
+}
 async function getUserDetails (req, res, next) {
     const user = await models.User.findOne({
         where: {
@@ -46,6 +62,23 @@ async function deleteUser (req, res, next) {
     })
     res.status(200).json({
         deletedUser
+    })
+}
+async function softDeleteUser(req,res,next){
+    const softDeletedUser=await models.User.update({'checkDelete':true},{
+    where:{
+        id:req.params.userId
+    }})
+    res.status(200).json({softDeletedUser})
+}
+async function deleteRole (req, res, next) {
+    const deletedRole = await models.Role.destroy({
+        where: {
+            id: req.params.userId
+        }
+    })
+    res.status(200).json({
+        deletedRole
     })
 }
 async function getQuery(req,res,next){
@@ -67,11 +100,39 @@ catch(error)
 }
 
 }
+async function getProjectDetails(req,res,next){
+    try{
+        const query=await models.User.findAll({
+            
+            include:[{
+                model:models.Project},
+              { model:models.Role}
+            ]    
+            // }]
+
+             
+    })
+        res.status(200).json({
+            query
+        })
+    }
+    
+    catch(error)
+    {
+        next(error)
+    }
+    
+    }
 module.exports = {
     createUser,
     updateUser,
     getUserDetails,
     getUsers,
     deleteUser,
-    getQuery
+    deleteRole,
+    getQuery,
+    getRoles,
+    getProjectDetails,
+    softDeleteUser,
+    getSoftDeletedUsers
 }
